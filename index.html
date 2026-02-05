@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pour toi 💕</title>
+
+<style>
+:root{
+  --pink:#ff6f91;
+  --card:#ffffff;
+  --shadow:0 14px 40px rgba(0,0,0,.14);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  height:100vh;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:linear-gradient(135deg,#ffe6ef,#fff6d5);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+}
+
+/* Carte message */
+#message{
+  width:min(560px,92vw);
+  background:var(--card);
+  padding:22px 18px;
+  border-radius:18px;
+  text-align:center;
+  box-shadow:var(--shadow);
+  animation:pop .9s ease;
+}
+#message p{
+  margin:0;
+  font-size:clamp(1.05rem,3.3vw,1.18rem);
+  line-height:1.55;
+}
+#message strong{font-weight:800}
+
+button{
+  margin-top:18px;
+  padding:12px 22px;
+  border:none;
+  border-radius:999px;
+  background:var(--pink);
+  color:white;
+  font-size:1rem;
+  cursor:pointer;
+}
+button:active{transform:scale(.98)}
+
+/* Bouquet après fermeture */
+#tulipes{
+  display:none;
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:-260px;
+  opacity:0;
+  animation:rise 1.4s ease forwards;
+}
+#tulipes img{
+  width:min(340px,74vw);
+  border-radius:18px;
+  filter:drop-shadow(0 18px 30px rgba(0,0,0,.18));
+}
+
+/* Pétales */
+.petal{
+  position:fixed;
+  top:-3vh;
+  font-size:clamp(14px,3.4vw,22px);
+  opacity:.9;
+  pointer-events:none;
+  animation:fall linear forwards;
+}
+
+@keyframes fall{
+  to{ transform:translate(var(--dx),110vh) rotate(360deg); }
+}
+@keyframes pop{
+  from{opacity:0;transform:scale(.96)}
+  to{opacity:1;transform:scale(1)}
+}
+@keyframes rise{
+  to{ bottom:22px; opacity:1; }
+}
+</style>
+</head>
+
+<body>
+
+<div id="message">
+  <p>
+    je voulais me faire pardonner pour ce que j’ai dis toute à l’heure…<br><br>
+    et vu que tu m’a rappeler que c’étais la saison des tulipes du coup<br>
+    <strong>Cadeau ma Princesse 💕</strong>
+  </p>
+  <button onclick="showTulipes()">Fermer le message</button>
+</div>
+
+<div id="tulipes">
+  <!-- ✅ TON FICHIER EXACT -->
+  <img src="tulipes.jpg.WEBP" alt="Bouquet de tulipes">
+</div>
+
+<script>
+const EMOJIS = ["🌸","🌷"];
+
+function spawnPetal(){
+  const s = document.createElement("span");
+  s.className = "petal";
+  s.textContent = EMOJIS[(Math.random()*EMOJIS.length)|0];
+  s.style.left = (Math.random()*100) + "vw";
+  s.style.setProperty("--dx", ((Math.random()*2-1)*18) + "vw");
+  s.style.animationDuration = (4 + Math.random()*4) + "s";
+  document.body.appendChild(s);
+  s.addEventListener("animationend", () => s.remove());
+}
+
+/* pluie douce */
+for(let i=0;i<18;i++) setTimeout(spawnPetal, i*180);
+setInterval(spawnPetal, 420);
+
+function showTulipes(){
+  document.getElementById("message").style.display = "none";
+  document.getElementById("tulipes").style.display = "block";
+}
+</script>
+
+</body>
+</html>
